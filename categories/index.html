@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xaiolu.ithub.io/hugo-stack/categories/'>
 
-<link rel="stylesheet" href="/hugo-stack/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Categories">
+<link rel="stylesheet" href="/hugo-stack/scss/style.min.b18cef3d5bc1252510e3b0eb10eae9b88426c168938f9b57637d6f2cdd3f9de9.css"><meta property='og:title' content="Categories">
 <meta property='og:description' content="欢迎来到我的网站，此博客由【Hugo + Stack】来进行搭建，主要分享个人生活和学习笔记">
 <meta property='og:url' content='https://xaiolu.ithub.io/hugo-stack/categories/'>
 <meta property='og:site_name' content='22s.top'>
@@ -97,7 +97,7 @@
             
                 <li>
                     <a 
-                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        href='https://github.com/xaiolu/hugo-stack'
                         target="_blank"
                         title="GitHub"
                         rel="me"
@@ -522,7 +522,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/hugo-stack/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/hugo-stack/ts/main.99ce1801c4bad426a42fc436add4721e149159dbb598636e9578fd59cf778c83.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
@@ -534,6 +534,159 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<div id="aplayer"></div>
+	
+<script>
+	
+	const musicDir = 'https:\/\/xaiolu.ithub.io\/hugo-stack\/music/'; 
+	const songs = [
+		'查无此字-林奕匡',
+		'初初-古巨基',
+		'乖乖报到-MC 张天赋',
+		'还记得-周柏豪',
+		'泼墨桃花-林峯',
+		'摄氏零度-张敬轩',
+		'下一位前度-林家谦',
+		'这个故事教训我们-李克勤',
+		'最后祝福-黄宗泽'
+	];
+
+	let audios = [];
+	songs.forEach((item) => {
+		const songInfo = item.split('-');
+		audios.push({
+			name: songInfo[0],
+			artist: songInfo[1],
+			url: musicDir + item + '/song.mp3',
+			cover: musicDir + item + '/cover.jpg',
+			lrc: musicDir + item + '/lyric.lrc',
+		});
+	});
+
+	const ap = new APlayer({
+	    container: document.getElementById('aplayer'),
+		fixed: true,
+		listMaxHeight: '90px',
+		lrcType: 3,
+	    audio: audios
+	});
+	
+	    
+
+	    window.onbeforeunload = () => {
+	        
+	        const playInfo = {
+	            index: ap.list.index,
+	            currentTime: ap.audio.currentTime,
+	            paused: ap.paused
+	        };
+	        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+	    };
+	
+	    
+
+	    window.onload = () => {
+	        
+	        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+	        if (!playInfo) {
+	            return;
+	        }
+	        
+	        ap.list.switch(playInfo.index);
+	        
+	        setTimeout(() => {
+	            
+	            ap.seek(playInfo.currentTime);
+	            
+	            if (!playInfo.paused) {
+	                ap.play()
+	            }
+	        }, 500);
+	    };
+	
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
+<script>
+	var pjax = new Pjax({
+	  selectors: [".main-container",".js-Pjax"]
+	})
+	
+	 pjax._handleResponse = pjax.handleResponse;
+	 
+	    pjax.handleResponse = function(responseText, request, href, options) {
+	        if (request.responseText.match("<html")) {
+	            if (responseText) {
+	                
+	                let newDom = new DOMParser().parseFromString(responseText, 'text/html');
+	                
+	                let bodyClass = newDom.body.className;
+	                document.body.setAttribute("class", bodyClass)
+	                
+	                pjax._handleResponse(responseText, request, href, options);
+	            }
+	        } else {
+	            
+	        }
+	    }
+		
+		    document.addEventListener('pjax:complete', () => {
+		        
+		        window.Stack.init();
+		    })
+		
+        
+  
+        
+        function searchInit() {
+            let search = document.querySelector('.search-result');
+            if (search) {
+                const searchForm = document.querySelector('.search-form') as HTMLFormElement,
+                    searchInput = searchForm.querySelector('input') as HTMLInputElement,
+                    searchResultList = document.querySelector('.search-result--list') as HTMLDivElement,
+                    searchResultTitle = document.querySelector('.search-result--title') as HTMLHeadingElement;
+        
+                new Search({
+                    form: searchForm,
+                    input: searchInput,
+                    list: searchResultList,
+                    resultTitle: searchResultTitle,
+                    resultTitleTemplate: window.searchResultTitleTemplate
+                });
+            }
+        }
+        
+        export {
+            searchInit
+        }
+
+</script>
+
+...
+<script>
+    var pjax = new Pjax({
+        selectors: [
+            ...
+            ".js-Pjax"
+        ]
+    })
+</script>
+<div class="js-Pjax">
+    <script>
+        
+        (function() {
+            let script = document.createElement('script');
+            
+             script.setAttribute('key', 'value');
+            ...
+            
+            document.querySelector('xxx').appendchild(script)
+        })(document)
+    </script>
+<div>
 
     </body>
 </html>
